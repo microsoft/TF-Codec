@@ -1,0 +1,15 @@
+numpy==1.26.4
+pyarrow==10.0.0
+torch==2.5.0
+torchaudio==2.5.0
+pandas
+pyyaml
+tensorboard
+geomloss
+scipy
+azureml
+azureml.core
+beartype
+lmdb
+tqdm
+soundfile

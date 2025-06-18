@@ -1,0 +1,11 @@
+#<-------- network structure related -------->#
+model_type: "tfnetv2_interleave_vqvae"
+temperature: [2.0, 0.5, 0.9999995]
+hop_fraction: 0.5
+use_compressed_input: True
+
+model_cfg: '6k_20ms_redundant'
+
+Train_cfg:
+  #<----training loss related---->#
+  use_entropy_loss: false

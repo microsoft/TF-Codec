@@ -1,0 +1,69 @@
+Model_cfg:
+    1k_40ms_redundant:
+      bitrate: '1k'  
+      use_learnable_compression: True
+      sampling_rate: 16000
+      combineVQ_frames: 4
+      dft_size: 640   #40ms/10ms
+      frame_dur: 0.04
+      hop_vqvae: 0.25
+      vq_in_dur: 0.01
+      latent_dim: 288
+      codebook_num: 6
+      codebook_size: 1024
+      target_entropy: 40
+    3k_40ms_redundant:
+      bitrate: '3k'  
+      use_learnable_compression: False
+      sampling_rate: 16000
+      combineVQ_frames: 4
+      dft_size: 640   #40ms/10ms
+      frame_dur: 0.04
+      hop_vqvae: 0.25
+      vq_in_dur: 0.01
+      latent_dim: 288
+      codebook_num: 16
+      codebook_size: 1024
+      target_entropy: 120
+    3k_40ms_redundant_Learnable:
+      bitrate: '3k'  
+      use_learnable_compression: True
+      sampling_rate: 16000
+      combineVQ_frames: 4
+      dft_size: 640   #40ms/10ms
+      frame_dur: 0.04
+      hop_vqvae: 0.25
+      vq_in_dur: 0.01
+      latent_dim: 288
+      codebook_num: 16
+      codebook_size: 1024
+      target_entropy: 120
+    6k_40ms_redundant:
+      bitrate: '6k'  
+      use_learnable_compression: False
+      sampling_rate: 16000
+      combineVQ_frames: 4
+      dft_size: 640   #40ms/10ms
+      frame_dur: 0.04
+      hop_vqvae: 0.25
+      vq_in_dur: 0.01
+      latent_dim: 288
+      codebook_num: 32
+      codebook_size: 1024
+      target_entropy: 240
+    6k_20ms_redundant:
+      bitrate: '6k'  
+      use_learnable_compression: False
+      sampling_rate: 16000
+      combineVQ_frames: 4
+      dft_size: 320  #20ms/5ms 
+      frame_dur: 0.02
+      hop_vqvae: 0.25
+      vq_in_dur: 0.005
+      latent_dim: 480
+      codebook_num: 16
+      codebook_size: 1024
+      target_entropy: 120
+      
+Common_cfg:
+    input_cprs_power: 0.3

@@ -1,0 +1,85 @@
+#<-------- network structure related -------->#
+model_type: "tfnetv2_interleave_vqvae"
+temperature: [2.0, 0.5, 0.9999995]
+hop_fraction: 0.5
+use_compressed_input: True
+
+model_cfg: '6k_20ms_redundant'
+
+#<-------- Training configurations -------->#
+Train_cfg:
+  learning_rate: 0.0004 
+  num_epochs: 1000
+  sav_per_num_iter: 2000  
+  sav_global_per_num_iter: 10000 # save global parameters and optimizers
+  max_keep: 100
+  log_step: 200
+  log_val_step: 2000
+  use_warmup: True
+
+  max_grad_norm: 1.0
+  disable_adaptive_grad_norm: true
+  tags: null
+
+  #<-------- data related -------->#
+  batch_size: 50    # batch size per GPU
+  val_batch_size: 5 # val batch size per GPU
+  random_crop_duration: -1 # -1 to use the whole clip for training
+  val_crop_duration: -1    # -1 to use the whole clip for validation
+
+  # training data in lmdb
+  input_data_idx: 0   
+  target_data_idx: 0
+
+  ## <-------- optimizer config -------->#
+  new_opt: false
+  optimizer:
+    opt_G:
+      name: adam
+      betas: [0.9,0.999] # adam betas
+      lr: 0.00003
+      G_warmup_time: 0
+    opt_D:
+      name: adam
+      betas: [0.9,0.999]
+      weight_decay:  0.000001
+      lr: 0.0003
+
+  #<----training loss related---->#
+  use_entropy_loss: true
+  entropy_loss_type: '2'
+  entropy_loss_weight: 0.04
+  use_defined_gumbelsoftmax: True
+
+  use_bin_loss: True
+  loss_type: "power-compressed-mse"
+  weight_amplitude: 0.5
+  power: 0.3
+  bin_loss_weight: 1.0
+
+  use_multiscale_mel_loss: True
+  mel_loss_type: 'multi_window' # /multi_window/multi_band
+  mel_loss_weight: 0.25
+  use_log_L2_term: False
+  mel_L2_term_weight: 0.05
+
+  #<----GAN config---->#
+  use_adv_loss: false
+  GAN_cfg:
+    load_disc_para: false
+    adversarial_loss: 'MSE'  #hinge/MSE/wasserstein/BCE
+    clip_value: 0.01
+    n_disc: 1      # at 1kbps/3kbps/6kbps, set n_disc=1, n_generator=1
+    n_generator: 1    # at 0.256kbps/0.512kbps, set n_disc=1, n_generator=10
+    D_warmup_time: 0
+    freeze_gen: False
+    disc_feat_loss_weight: 0.1
+    adv_loss_weight: 0.001
+
+    use_freq_disc: true
+    d_freq_weight: 1
+    g_freq_weight: 1
+
+    
+
+
