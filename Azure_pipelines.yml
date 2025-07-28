@@ -6,7 +6,7 @@ pool:
 
 variables:
   CodeQL.Enabled: true
-  LGTM.UploadSnapshot: true
+  LGTM.UploadSnapshot: false
 
 steps:
 #####################################################
@@ -15,32 +15,18 @@ steps:
 - task: CredScan@3
 #####################################################
 
-#####################################################
-# CodeQL 3000
-#####################################################
-- task: CodeQL3000Init@0
-- task: CodeQL3000Finalize@0
-#####################################################
-
-#####################################################
-# If CodeQL3000 is not instaled on your ADO Project
-# Comment the CodeQL block above and uncomment the CodeQL block below
-# Update the programing language as neede
-#####################################################
 
 #####################################################
 # CodeQL
 #####################################################
-# - task: Semmle@1
-#   inputs:
-#     sourceCodeDirectory: '$(Build.SourcesDirectory)'
-#     language: 'csharp'
-#     querySuite: 'Recommended'
-#     timeout: '1800'
-#     ram: '16384'
-#     addProjectDirToScanningExclusionList: true
-#   env:
-#     SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+- task: Semmle@1
+  inputs:
+    sourceCodeDirectory: '$(Build.SourcesDirectory)'
+    language: 'python'
+    querySuite: 'Recommended'
+    timeout: '1800'
+    ram: '16384'
+    addProjectDirToScanningExclusionList: true
 #####################################################
 
 #####################################################
@@ -50,17 +36,6 @@ steps:
   inputs:
     scanType: 'Register'
     verbosity: 'Verbose'
-    alertWarningLevel: 'High'
-#####################################################
-
-#####################################################
-# Component Governance for Docker Images
-#####################################################
-- task: ComponentGovernanceComponentDetection@0
-  inputs:
-    scanType: 'Register'
-    verbosity: 'Verbose'
-    dockerImagesToScan: '$(Build.SourcesDirectory)'
     alertWarningLevel: 'High'
 #####################################################
 
@@ -76,14 +51,3 @@ steps:
     ToolLogsNotFoundAction: 'Standard'
 #####################################################
 
-#####################################################
-# If you want to fail your build then uncomment the next block
-#####################################################
-
-#####################################################
-# Break Builds of Security Failures
-#####################################################
-# - task: PostAnalysis@2
-#   inputs:
-#     GdnBreakAllTools: true
-#####################################################
